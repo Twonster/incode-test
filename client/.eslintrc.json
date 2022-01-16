@@ -1,0 +1,62 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 13,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "no-use-before-define": "off", 
+        "import/prefer-default-export": "off", 
+        "react/prop-types": "off", 
+        "arrow-body-style": "off", 
+        "@typescript-eslint/no-use-before-define": ["error"],
+        "@typescript-eslint/no-namespace": "off",
+        "react/button-has-type": "off",
+        "max-len": ["warn", { "code": 120, "tabWidth": 2}],
+        "default-param-last": "off",
+        "react/jsx-props-no-spreading": "off",
+        "consistent-return": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"],
+        "react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ],
+        "react/function-component-definition": "off",
+        "semi": ["error", "never"],
+        "quotes": ["error", "single"],
+        "comma-dangle": ["error", "never"],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+              "js": "never",
+              "jsx": "never",
+              "ts": "never",
+              "tsx": "never"
+            }
+        ]
+        
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+              "extensions": [".ts", ".tsx", ".native.js"]
+            }
+        }
+    }
+}
