@@ -15,5 +15,5 @@ export const TickerName: FC<TickerNameProps> = memo(
       </StyledTickerName>
     )
   },
-  (prev, next): boolean => (prev.dimensions === next.dimensions)
+  (prev, next): boolean => (prev.dimensions === next.dimensions && prev.data.join('_') === next.data.join('_'))
 )

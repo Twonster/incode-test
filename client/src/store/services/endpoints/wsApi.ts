@@ -1,18 +1,10 @@
 import { io } from 'socket.io-client'
+
 import { appApi } from '../ApiService'
 
-import { constants } from '../../../constants'
+import { STORE } from '../../interfaces'
 
-export interface Ticker {
-  ticker: string[],
-  exchange: string,
-  price: number,
-  change: number,
-  change_percent: number,
-  dividend: number,
-  yield: number,
-  last_trade_time: Date,
-}
+import { constants } from '../../../constants'
 
 enum EventType {
   start = 'start',
@@ -22,7 +14,7 @@ enum EventType {
 
 export const wsApi = appApi.injectEndpoints({
   endpoints: (build) => ({
-    wsConnect: build.query<Ticker[][], number>({
+    wsConnect: build.query<STORE.Ticker[][], number>({
       queryFn: () => ({ data: [] }),
       keepUnusedDataFor: 0, // время кеширования после размонтирования
       async onCacheEntryAdded(cacheLimit, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
