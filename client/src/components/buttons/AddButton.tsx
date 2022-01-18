@@ -1,6 +1,20 @@
-import React, { FC } from 'react'
-import { StyledAddButton } from './styles'
+import React, { FC, memo } from 'react'
+import { FaPlus, FaCheck } from 'react-icons/fa'
+import { AddButtonShapeProps, StyledAddButton } from './styles'
 
-export const AddButton: FC<{  }> = ({ children }) => {
-  return <StyledAddButton>{children}</StyledAddButton>
+interface AddButtonProps {
+  isChecked: boolean
+  shape: AddButtonShapeProps
+  action: () => void
 }
+
+export const AddButton: FC<AddButtonProps> = memo(({
+  children, isChecked, shape, action
+}) => {
+  return (
+    <StyledAddButton isChecked={isChecked} onClick={action} shape={children ? 'rect' : shape}>
+      {!!children && (isChecked ? <FaCheck /> : children)}
+      {!children && (isChecked ? <FaCheck /> : <FaPlus />)}
+    </StyledAddButton>
+  )
+}, (prev, current) => prev.isChecked === current.isChecked)

@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { appApi } from './services/ApiService'
+import tickerSlice from './slices/tickersSlice'
 
 const store = configureStore({
   reducer: {
+    [tickerSlice.name]: tickerSlice.reducer,
     [appApi.reducerPath]: appApi.reducer
   },
   // подключаем мидлвар к стору (like saga/thunk)

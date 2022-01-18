@@ -1,23 +1,86 @@
 import styled, { css } from 'styled-components'
-import { Vector } from '../../modules/financeModule'
+import { Vector } from '../../modules/finances/interfaces'
 
 export type VectorViewType = 'arrow' | 'arifmetic'
 
+export const StyledTickerName = styled.div<{ winWidth: number }>`
+  display: flex;
+  width: 20%;
+  min-width: 160px;
+  flex: 1;
+  transition: all .3s;
+  
+  span {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .name {
+    font-size: 1em;
+    font-weight: 600;
+  }
+
+  .abbr {
+    flex-shrink: 0;
+    text-transform: uppercase;
+    text-align: center;
+    margin-right: .5em ;
+
+    font-weight: bold;
+    color: #ffffff;
+    font-size: .8em;
+    
+    background-color: #0070bb;
+    padding: 2px;
+    border-radius: 3px;
+    height: fit-content;
+    min-width: 60px;
+    width: 60px;
+  }
+
+  &:hover {
+    .abbr {
+      width: fit-content;
+    }
+  }
+
+  ${(props) => props.winWidth < 700 && css`
+    flex-direction: column;
+    min-width: 60px;
+
+    .name {
+      font-size: .8em;
+      font-weight: normal;
+    }
+  `};
+`
+
 export const StyledRow = styled.div`
   &:first-child {
-    border-top: 1px solid #8b8b8b;
+    border-top: 2px solid #e5e5e5;
   }
+  &:last-child {
+    border-bottom: none;
+  }
+  
   cursor: pointer;
   display: flex;
-  border-bottom: 1px solid #8b8b8b;
+  border-bottom: 2px solid #e5e5e5;
   align-items: center;
   height: 50px;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.035);
-  }
-`
 
+    ${StyledTickerName} {
+      .abbr {
+        width: fit-content;
+      }
+    }
+  }
+
+`
 export const StyledNode = styled.div<{ vectorType?: Vector, filled?: boolean }>`
   flex: 1;
   padding: 2px 5px;
@@ -27,6 +90,7 @@ export const StyledNode = styled.div<{ vectorType?: Vector, filled?: boolean }>`
   font-weight: bold;
   display: flex;
   justify-content: end;
+  
 
   .wrapper {
     width: fit-content;
@@ -79,50 +143,5 @@ export const StyledVector = styled.span<{ vector?: Vector, vectorGliph?: VectorV
 
   ${(props) => props.vector === 'down' && css`
     color: #ff6262;
-  `};
-`
-
-export const StyledTickerName = styled.div<{ winWidth: number }>`
-  display: flex;
-  width: 20%;
-  min-width: 160px;
-  flex: 1;
-  transition: all .3s;
-  
-  span {
-    display: block;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-  .name {
-    font-size: 1em;
-    font-weight: 600;
-  }
-
-  .abbr {
-    flex-shrink: 0;
-    text-transform: uppercase;
-    text-align: center;
-    margin-right: .5em ;
-
-    font-weight: bold;
-    color: #ffffff;
-    font-size: .8em;
-    
-    background-color: #0070bb;
-    padding: 2px;
-    border-radius: 3px;
-    height: fit-content;
-    width: 50px;
-  }
-
-  ${(props) => props.winWidth < 700 && css`
-    flex-direction: column;
-    min-width: 60px;
-    .name {
-      font-size: .8em;
-      font-weight: normal;
-    }
   `};
 `

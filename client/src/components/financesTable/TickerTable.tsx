@@ -1,8 +1,12 @@
 import React, {
-  FC, useRef
+  FC, useRef, useState
 } from 'react'
-import { RenderedTicker } from '../../modules/financeModule'
+import { useDispatch, useSelector } from 'react-redux'
+import { RenderedTicker } from '../../modules/finances/interfaces'
+import { TickersSliceState, toggleTicker } from '../../store/slices/tickersSlice'
+import { RootState } from '../../store/store'
 import useComponentDimensions from '../../utils/hooks/useComponentDimensions'
+import { AddButton } from '../buttons/AddButton'
 import { StyledRow } from './styles'
 import { TickerName } from './TickerName'
 import { TickerNode } from './TickerNode'
@@ -19,10 +23,15 @@ export const Row: FC<RenderedTicker> = ({
   // yield: income
 }) => {
   const ref = useRef(null)
+  const dispatch = useDispatch()
 
+  const { selectedTickers } = useSelector<RootState, TickersSliceState>((store) => store.tickers)
   const { width } = useComponentDimensions(ref)
-  // const date = new Date(lastTradeTime)
-  // const fullTime = `${date.getHours()} : ${date.getMinutes()} : ${date.getSeconds()}`
+
+  const toggleToAdded = () => {
+    dispatch(toggleTicker(ticker[0]))
+  }
+
   return (
     <StyledRow ref={ref}>
       <TickerName dimensions={width} data={ticker} />
@@ -41,6 +50,11 @@ export const Row: FC<RenderedTicker> = ({
         {' '}
         %
       </TickerNode>
+      <AddButton
+        isChecked={selectedTickers.includes(ticker[0])}
+        shape="circle"
+        action={toggleToAdded}
+      />
     </StyledRow>
   )
 }

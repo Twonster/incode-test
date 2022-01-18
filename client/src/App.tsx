@@ -1,23 +1,34 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import GlobalStyles from './GlobalStyles'
 
-import FinanceModule from './modules/financeModule'
+import AllTickersModule from './modules/finances/view/AllTickersModule'
+import SelectedTickersModule from './modules/finances/view/SelectedTickersModule'
+import { initialiseState, TickersSliceState, toggleTicker } from './store/slices/tickersSlice'
+import { RootState } from './store/store'
+import { getStorageItem } from './utils/global/localStorageService'
 
 const StyledApp = styled.div`
-  /* display: flex;
-  justify-content: center; */
   margin: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 `
 
 const App: FC = () => {
-  // const [isShow, setIsShow] = useState(false)
+  const [cachingDataCount, setCachingDataCount] = useState(2)
+  const { selectedTickers } = useSelector<RootState, TickersSliceState>((store) => store.tickers)
+  const dispatcher = useDispatch()
+  useEffect(() => {
+    dispatcher(initialiseState())
+  }, [])
+
   return (
     <StyledApp>
-      {/* <button onClick={() => setIsShow(!isShow)}>{isShow ? 'HIDE' : 'SHOW'}</button> */}
-      <FinanceModule />
+      {!!selectedTickers.length && <SelectedTickersModule cachingDataCount={cachingDataCount} />}
+      <AllTickersModule cachingDataCount={cachingDataCount} />
       <GlobalStyles />
     </StyledApp>
   )
