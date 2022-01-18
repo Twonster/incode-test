@@ -1,5 +1,5 @@
 import React, {
-  FC, useRef, useState
+  FC, useRef
 } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RenderedTicker } from '../../modules/finances/interfaces'

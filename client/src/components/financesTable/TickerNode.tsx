@@ -1,4 +1,4 @@
-import React, { FC, memo, ReactNode } from 'react'
+import React, { FC, memo } from 'react'
 import { Vector } from '../../modules/finances/interfaces'
 import { VectorViewType, StyledNode, StyledVector } from './styles'
 
@@ -6,6 +6,7 @@ interface NodeProps {
   filled?: boolean
   vector?: Vector
   vectorviewType?: VectorViewType
+  title?: string
 }
 
 export const TickerNode: FC<NodeProps> = memo(

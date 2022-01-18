@@ -5,9 +5,8 @@ import GlobalStyles from './GlobalStyles'
 
 import AllTickersModule from './modules/finances/view/AllTickersModule'
 import SelectedTickersModule from './modules/finances/view/SelectedTickersModule'
-import { initialiseState, TickersSliceState, toggleTicker } from './store/slices/tickersSlice'
+import { initialiseState, TickersSliceState } from './store/slices/tickersSlice'
 import { RootState } from './store/store'
-import { getStorageItem } from './utils/global/localStorageService'
 
 const StyledApp = styled.div`
   margin: 0;
@@ -21,6 +20,7 @@ const App: FC = () => {
   const [cachingDataCount, setCachingDataCount] = useState(2)
   const { selectedTickers } = useSelector<RootState, TickersSliceState>((store) => store.tickers)
   const dispatcher = useDispatch()
+
   useEffect(() => {
     dispatcher(initialiseState())
   }, [])

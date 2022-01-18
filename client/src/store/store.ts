@@ -7,7 +7,6 @@ const store = configureStore({
     [tickerSlice.name]: tickerSlice.reducer,
     [appApi.reducerPath]: appApi.reducer
   },
-  // подключаем мидлвар к стору (like saga/thunk)
   middleware: (middleware) => middleware().concat(appApi.middleware)
 })
 

@@ -1,13 +1,19 @@
-import React, { FC } from 'react'
-import { Row } from '../../../components/financesTable/TickerTable'
+import React, { FC, useState, useEffect } from 'react'
+import { ShowMoreButton } from '../../../components/buttons/ShowMoreButton'
+import { Row } from '../../../components/financesTable/TickerRow'
 import { useWsConnectQuery } from '../../../store/services/endpoints/wsApi'
+import { getStorageItem } from '../../../utils/global/localStorageService'
 import { StyledModule } from '../../styles'
 import { processDataAndVector } from '../services'
 
 const AllFinanceModule: FC<{ cachingDataCount: number }> = ({ cachingDataCount }) => {
+  const [moduleIsExpanded, setModuleIsExpanded] = useState(false)
+
   const {
-    isLoading, isSuccess, data
-  } = useWsConnectQuery(cachingDataCount)
+    isSuccess, data, isLoading
+  } = useWsConnectQuery(cachingDataCount, {
+    skip: !moduleIsExpanded
+  })
 
   const spawnRows = () => {
     if (isSuccess && data && !!data.length) {
@@ -15,16 +21,25 @@ const AllFinanceModule: FC<{ cachingDataCount: number }> = ({ cachingDataCount }
     }
   }
 
+  useEffect(() => {
+    setModuleIsExpanded(!getStorageItem<string[]>('ticker'))
+  }, [])
+
   return (
-    <StyledModule>
-      <h3>You may be interested in</h3>
-      {(isSuccess && data && !!data.length)
-        ? (
-          <div className="spawn-wrapper">
-            {spawnRows()}
-          </div>
-        )
-        : '...loading'}
+    <StyledModule
+      disabled={!moduleIsExpanded}
+      onClick={!moduleIsExpanded ? () => setModuleIsExpanded(!moduleIsExpanded) : undefined}
+    >
+      <div className="title">
+        <h3>You may be interested in</h3>
+        <ShowMoreButton expanded={moduleIsExpanded} action={() => setModuleIsExpanded(!moduleIsExpanded)} />
+      </div>
+      {(isSuccess && data && !!data.length) && (
+        <div className="spawn-wrapper">
+          {moduleIsExpanded && spawnRows()}
+        </div>
+      )}
+      {isLoading && '...loading'}
     </StyledModule>
   )
 }

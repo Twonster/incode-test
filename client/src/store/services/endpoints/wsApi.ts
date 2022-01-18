@@ -16,7 +16,10 @@ export const wsApi = appApi.injectEndpoints({
   endpoints: (build) => ({
     wsConnect: build.query<STORE.Ticker[][], number>({
       queryFn: () => ({ data: [] }),
-      keepUnusedDataFor: 0, // время кеширования после размонтирования
+      // keepUnusedDataFor
+      // время кеширования после размонтирования
+      // оставил 20 сек, если юзер удалит все избранные тикеры.
+      keepUnusedDataFor: 20,
       async onCacheEntryAdded(cacheLimit, { updateCachedData, cacheDataLoaded, cacheEntryRemoved }) {
         const socket = io(constants.API.endpoint_dev)
 

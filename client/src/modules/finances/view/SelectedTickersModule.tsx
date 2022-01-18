@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Row } from '../../../components/financesTable/TickerTable'
+import { Row } from '../../../components/financesTable/TickerRow'
 import { useWsConnectQuery } from '../../../store/services/endpoints/wsApi'
 import { getStorageItem } from '../../../utils/global/localStorageService'
 import { StyledModule } from '../../styles'

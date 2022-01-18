@@ -4,6 +4,7 @@ import { StyledTickerName } from './styles'
 export interface TickerNameProps {
   data: string[]
   dimensions: number
+  title?: string
 }
 
 export const TickerName: FC<TickerNameProps> = memo(

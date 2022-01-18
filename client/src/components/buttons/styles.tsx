@@ -2,11 +2,15 @@ import styled, { css } from 'styled-components'
 
 export type AddButtonShapeProps = 'square' | 'circle'
 interface StyledAddButtonProps {
-  shape?: AddButtonShapeProps | 'rect'
+  shape: AddButtonShapeProps | 'rect'
   isChecked: boolean
 }
 
-export const StyledAddButton = styled.button<StyledAddButtonProps>`
+interface StyledShowMoreButtonProps {
+  expanded: boolean
+}
+
+const StyledGlobalButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,7 +20,18 @@ export const StyledAddButton = styled.button<StyledAddButtonProps>`
   color: #8b8b8b;
   border: 2px solid #8b8b8b;
   background-color: transparent;
-  
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+`
+
+export const StyledAddButton = styled(StyledGlobalButton)<StyledAddButtonProps>`
   ${({ isChecked }) => isChecked && css`
     color: #20a820;
     background-color: rgba(32, 168, 32, 0.2);
@@ -34,9 +49,8 @@ export const StyledAddButton = styled.button<StyledAddButtonProps>`
     padding: 0%.8em;
     border-radius: 5px;
   `}
+`
 
-
-  &:hover {}
-  &:active {}
-
+export const StyledShowMoreButton = styled(StyledGlobalButton)<StyledShowMoreButtonProps>`
+  border-radius: 50%;
 `
